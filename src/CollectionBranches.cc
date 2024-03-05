@@ -33,16 +33,15 @@ void CollectionBranches::initBranches( TTree* tree, const std::string& pre){
   tree->Branch( (pre+"paod").c_str(),  _parOriginID,  (pre+"paod["+pre+"npar]/I").c_str() ) ;
 
   tree->Branch( (pre+"pain").c_str(),  _parIntN,      (pre+"pain["+pre+"npar]/I").c_str() ) ;
-  tree->Branch( (pre+"paiv").c_str(),  _parIntVal,    (pre+"paiv["+pre+"npar][50]/I").c_str() ) ;
+  tree->Branch( (pre+"paiv").c_str(),  _parIntVal,    (pre+"paiv["+pre+Form("npar][%d]/I", LCT_PARAMVALS_MAX)).c_str() ) ;
 
   tree->Branch( (pre+"pafn").c_str(),  _parFloatN,    (pre+"pafn["+pre+"npar]/I").c_str() ) ;
-  tree->Branch( (pre+"pafv").c_str(),  _parFloatVal,  (pre+"pafv["+pre+"npar][50]/F").c_str() ) ;
+  tree->Branch( (pre+"pafv").c_str(),  _parFloatVal,  (pre+"pafv["+pre+Form("npar][%d]/F",LCT_PARAMVALS_MAX)).c_str() ) ;
 
   tree->Branch( (pre+"pasn").c_str(),  _parStringN,   (pre+"pasn["+pre+"npar]/I").c_str() ) ;
   //not yet implemented! 2D vector of strings not well supported by TTree
   //tree->Branch( (pre+"pasv").c_str(),  &_parStringVal) ;
   streamlog_out( DEBUG2 ) << "left CollectionBranch init" <<  std::endl ;
-
 }
 
 

@@ -87,7 +87,7 @@ void JetBranches::initBranches( TTree* tree, const std::string& pre){
 
 	  tree->Branch( (pre+"jnpid" ).c_str() , &_jnpid   ,  (pre+"jnpid/I").c_str() ) ;
 	  tree->Branch( (pre+"npfojet").c_str(), &_njetpfo , (pre+"npfojet["+pre+"njet]/I").c_str() ) ;
-    tree->Branch( (pre+"rcidx").c_str(), &_jetpfoori , (pre+"rcidx["+pre+"njet][LCT_JET_PARTICLES_MAX]/I").c_str() ) ;
+    tree->Branch( (pre+"rcidx").c_str(), &_jetpfoori , (pre+"rcidx["+pre+Form("njet][%d]/I",LCT_JET_PARTICLES_MAX)).c_str() ) ;
    } // end if
 
    //PFO branches
@@ -97,17 +97,17 @@ void JetBranches::initBranches( TTree* tree, const std::string& pre){
           tree->Branch( (pre+"ndaughters").c_str(), _ndaughters , (pre+"ndaughters["+pre+"njet]/I").c_str() ) ;
           tree->Branch( (pre+"ntracks").c_str(), _ntracks , (pre+"ntracks["+pre+"njet]/I").c_str() ) ;
           tree->Branch( (pre+"nclusters").c_str(), _nclusters , (pre+"nclusters["+pre+"njet]/I").c_str() ) ;
-          tree->Branch( (pre+"daughters_PX").c_str(), _daughters_PX , (pre+"daughters_PX["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_PY").c_str(), _daughters_PY , (pre+"daughters_PY["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_PZ").c_str(), _daughters_PZ , (pre+"daughters_PZ["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_E").c_str(), _daughters_E , (pre+"daughters_E["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_M").c_str(), _daughters_M , (pre+"daughters_M["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_Q").c_str(), _daughters_Q , (pre+"daughters_Q["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackD0").c_str(), _daughters_trackD0 , (pre+"daughters_trackD0["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackPhi").c_str(), _daughters_trackPhi , (pre+"daughters_trackPhi["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackOmega").c_str(), _daughters_trackOmega , (pre+"daughters_trackOmega["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackZ0").c_str(), _daughters_trackZ0 , (pre+"daughters_trackZ0["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackTanLambda").c_str(), _daughters_trackTanLambda , (pre+"daughters_trackTanLambda["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_PX").c_str(), _daughters_PX , (pre+"daughters_PX["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_PY").c_str(), _daughters_PY , (pre+"daughters_PY["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_PZ").c_str(), _daughters_PZ , (pre+"daughters_PZ["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_E").c_str(), _daughters_E , (pre+"daughters_E["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_M").c_str(), _daughters_M , (pre+"daughters_M["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_Q").c_str(), _daughters_Q , (pre+"daughters_Q["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_trackD0").c_str(), _daughters_trackD0 , (pre+"daughters_trackD0["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_trackPhi").c_str(), _daughters_trackPhi , (pre+"daughters_trackPhi["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_trackOmega").c_str(), _daughters_trackOmega , (pre+"daughters_trackOmega["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_trackZ0").c_str(), _daughters_trackZ0 , (pre+"daughters_trackZ0["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
+          tree->Branch( (pre+"daughters_trackTanLambda").c_str(), _daughters_trackTanLambda , (pre+"daughters_trackTanLambda["+pre+Form("njet][%d]/F",LCT_JET_PARTICLES_MAX)).c_str() ) ;
    }
 
 
