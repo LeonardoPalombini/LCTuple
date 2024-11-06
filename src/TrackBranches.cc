@@ -8,6 +8,8 @@
 
 #include "TTree.h"
 
+#include "TMath.h"
+
 
 void TrackBranches::initBranches( TTree* tree, const std::string& pre){
 
@@ -29,28 +31,44 @@ void TrackBranches::initBranches( TTree* tree, const std::string& pre){
   tree->Branch( (pre+"trede").c_str() , _trede , (pre+"trede["+pre+"ntrk]/F").c_str() ) ;
   tree->Branch( (pre+"trrih").c_str() , _trrih , (pre+"trrih["+pre+"ntrk]/F").c_str() ) ;
   tree->Branch( (pre+"trthn").c_str() , _trthn , (pre+"trthn["+pre+"ntrk]/I").c_str() ) ;
-  tree->Branch( (pre+"trthi").c_str() , _trthi , (pre+"trthi["+pre+"ntrk][50]/I").c_str() ) ;
-  tree->Branch( (pre+"trshn").c_str() , _trshn , (pre+"trshn["+pre+"ntrk][12]/I").c_str() ) ;
-  tree->Branch( (pre+"trthd").c_str() , _trthd , (pre+"trthd["+pre+"ntrk][50]/I").c_str() ) ;
   tree->Branch( (pre+"trnts").c_str() , _trnts , (pre+"trnts["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trfts").c_str() , _trfts , (pre+"trfts["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trsip").c_str() , _trsip , (pre+"trsip["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trsfh").c_str() , _trsfh , (pre+"trsfh["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trslh").c_str() , _trslh , (pre+"trslh["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trsca").c_str() , _trsca , (pre+"trsca["+pre+"ntrk]/I").c_str() ) ;
+  tree->Branch( (pre+"trtvhn").c_str() , _trtvhn , (pre+"trtvhn["+pre+"ntrk]/I").c_str() ) ;
+  tree->Branch( (pre+"trtihn").c_str() , _trtihn , (pre+"trtihn["+pre+"ntrk]/I").c_str() ) ;
+  tree->Branch( (pre+"trtohn").c_str() , _trtohn , (pre+"trtohn["+pre+"ntrk]/I").c_str() ) ;
+  tree->Branch( (pre+"trtnh").c_str() , _trtnh , (pre+"trtnh["+pre+"ntrk]/I").c_str() ) ;
+  tree->Branch( (pre+"trome").c_str() , _trome , (pre+"trome["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trtnl").c_str() , _trtnl , (pre+"trtnl["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trthe").c_str() , _trthe , (pre+"trthe["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trdze").c_str() , _trdze , (pre+"trdze["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trzze").c_str() , _trzze , (pre+"trzze["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trphi").c_str() , _trphi , (pre+"trphi["+pre+"ntrk]/F").c_str() ) ;
 
   tree->Branch( (pre+"ntrst").c_str() , &_ntrst , (pre+"ntrst/I").c_str() ) ;
-
   tree->Branch( (pre+"tsloc").c_str() , _tsloc , (pre+"tsloc["+pre+"ntrst]/I").c_str() ) ;
   tree->Branch( (pre+"tsdze").c_str() , _tsdze , (pre+"tsdze["+pre+"ntrst]/F").c_str() ) ;
   tree->Branch( (pre+"tsphi").c_str() , _tsphi , (pre+"tsphi["+pre+"ntrst]/F").c_str() ) ;
   tree->Branch( (pre+"tsome").c_str() , _tsome , (pre+"tsome["+pre+"ntrst]/F").c_str() ) ;
   tree->Branch( (pre+"tszze").c_str() , _tszze , (pre+"tszze["+pre+"ntrst]/F").c_str() ) ;
   tree->Branch( (pre+"tstnl").c_str() , _tstnl , (pre+"tstnl["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tscov").c_str() , _tscov , (pre+"tscov["+pre+"ntrst][15]/F").c_str() ) ;
   tree->Branch( (pre+"tsrpx").c_str() , _tsrpx , (pre+"tsrpx["+pre+"ntrst]/F").c_str() ) ;
   tree->Branch( (pre+"tsrpy").c_str() , _tsrpy , (pre+"tsrpy["+pre+"ntrst]/F").c_str() ) ;
   tree->Branch( (pre+"tsrpz").c_str() , _tsrpz , (pre+"tsrpz["+pre+"ntrst]/F").c_str() ) ;
+
+  if(_writeExtraParameters) {
+    tree->Branch( (pre+"trthi").c_str() , _trthi , (pre+"trthi["+pre+"ntrk][50]/I").c_str() ) ;
+    tree->Branch( (pre+"trshn").c_str() , _trshn , (pre+"trshn["+pre+"ntrk][12]/I").c_str() ) ;
+    tree->Branch( (pre+"trthd").c_str() , _trthd , (pre+"trthd["+pre+"ntrk][50]/I").c_str() ) ;
+    tree->Branch( (pre+"trthx").c_str() , _trthx , (pre+"trthx["+pre+"ntrk][50]/F").c_str() ) ;
+    tree->Branch( (pre+"trthy").c_str() , _trthy , (pre+"trthy["+pre+"ntrk][50]/F").c_str() ) ;
+    tree->Branch( (pre+"trthz").c_str() , _trthz , (pre+"trthz["+pre+"ntrk][50]/F").c_str() ) ;
+    tree->Branch( (pre+"tscov").c_str() , _tscov , (pre+"tscov["+pre+"ntrst][15]/F").c_str() ) ;
+    tree->Branch( (pre+"trcov").c_str() , _tscov , (pre+"tscov["+pre+"ntrk][15]/F").c_str() ) ;
+  }
 
 }
   
@@ -69,10 +87,10 @@ void TrackBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
   if (_writeparameters) CollectionBranches::fill(col, evt);
 
   _ntrk  = col->getNumberOfElements() ;
-  
+
   //---------  create a helper vector with track states first -------------------------------
   std::vector<lcio::TrackState*> tsV ;
-  tsV.reserve(  col->getNumberOfElements() * 4 ) ;
+  tsV.reserve(  col->getNumberOfElements() * 15 ) ;
   
   for(int i=0, nrc  = col->getNumberOfElements() ; i < nrc ; ++i ){
     
@@ -91,6 +109,7 @@ void TrackBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
   _ntrst = tsV.size() ;
 
   streamlog_out( DEBUG ) <<  " total number of track states : " << _ntrst << std::endl  ; 
+
   //----------  fill the track states ---------------------------------------
   for(int i=0 ; i < _ntrst ; ++i){
     
@@ -106,12 +125,12 @@ void TrackBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
     _tsrpy[ i ] = ts->getReferencePoint()[1] ;
     _tsrpz[ i ] = ts->getReferencePoint()[2] ;
     
-    for(int j=0;j<15;++j){
-      _tscov[ i ][ j ] = ts->getCovMatrix()[j] ;
+    if(_writeExtraParameters) {
+      for(int j=0;j<15;++j){
+        _tscov[ i ][ j ] = ts->getCovMatrix()[j] ;
+      }
     }
-    
   }
-  
   
   //------  fill the Tracks particle ----------------------------
   for(int i=0 ; i < _ntrk ; ++i){
@@ -134,37 +153,78 @@ void TrackBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
 
     ts = trk->getTrackState( lcio::TrackState::AtIP )  ;
     _trsip[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
-    
+
+    // save parameters AtIP state
+    if ( ts ) {
+      _trome[ i ] = ts->getOmega();
+      _trtnl[ i ] = ts->getTanLambda();
+      _trthe[ i ] = TMath::PiOver2()-atan(ts->getTanLambda());
+      _trdze[ i ] = ts->getD0() ;
+      _trzze[ i ] = ts->getZ0() ;
+      _trphi[ i ] = ts->getPhi() ;
+    } else {
+      _trome[ i ] = -1;
+      _trtnl[ i ] = -1;
+      _trthe[ i ] = -1;  
+      _trdze[ i ] = -1;
+      _trzze[ i ] = -1;
+      _trphi[ i ] = -1;
+    }    
+
+   if(_writeExtraParameters) {
+      for(int j=0;j<15;++j){
+        _trcov[ i ][ j ] = ts->getCovMatrix()[j] ;
+      }
+    }
+
     ts = trk->getTrackState( lcio::TrackState::AtFirstHit ) ;
     _trsfh[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
-    
+
     ts =  trk->getTrackState( lcio::TrackState::AtLastHit ) ;
     _trslh[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
-    
+
     ts = trk->getTrackState( lcio::TrackState::AtCalorimeter ) ;
     _trsca[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
     
-    
     int nshn = ( trk->getSubdetectorHitNumbers().size()   <  12  ?  
 		 trk->getSubdetectorHitNumbers().size()   :  12  ) ;
-    
-    for( int j=0; j<nshn ; ++j )
-      _trshn[ i ][ j ]  = trk->getSubdetectorHitNumbers()[j] ;
 
+    if(_writeExtraParameters) {    
+      for( int j=0; j<nshn ; ++j )
+        _trshn[ i ][ j ]  = trk->getSubdetectorHitNumbers()[j] ;
+    }
+
+    const EVENT::IntVec& subdetectorHits = trk->getSubdetectorHitNumbers();
+
+    if ( trk->getSubdetectorHitNumbers().size() > 2 )
+      _trtvhn[ i ] = subdetectorHits[1]+subdetectorHits[2]; // vertex
+    if ( trk->getSubdetectorHitNumbers().size() > 4 )
+      _trtihn[ i ] = subdetectorHits[3]+subdetectorHits[4]; // inner
+    if ( trk->getSubdetectorHitNumbers().size() > 6 )
+      _trtohn[ i ] = subdetectorHits[5]+subdetectorHits[6]; // outer
+
+    _trtnh[ i ] = trk->getNholes();
 
     _trthn[ i ] = trk->getTrackerHits().size();
+      
+    if(_writeExtraParameters) {
 
-    for( unsigned int ihit=0; ihit<trk->getTrackerHits().size() ; ++ihit ){
-      int hit_index = ( trk->getTrackerHits().at(ihit) ?
-			trk->getTrackerHits().at(ihit)->ext<CollIndex>() - 1 :
-			-1 );
-      unsigned det = ( trk->getTrackerHits().at(ihit) ?
+      for( unsigned int ihit=0; ihit<trk->getTrackerHits().size() ; ++ihit ){
+        int hit_index = ( trk->getTrackerHits().at(ihit) ?
+			                        trk->getTrackerHits().at(ihit)->ext<CollIndex>() - 1 : -1 );
+        unsigned det = ( trk->getTrackerHits().at(ihit) ?
                              (unsigned) (trk->getTrackerHits().at(ihit)->getCellID0() & 0x1f) :
                               0 );
-      _trthd[ i ][ ihit ] = det ;
-      _trthi[ i ][ ihit ] = hit_index;
-
+        _trthd[ i ][ ihit ] = det ;
+        _trthi[ i ][ ihit ] = hit_index;
+        if ( trk->getTrackerHits().at(ihit) ) {
+          lcio::TrackerHit* hit = static_cast<lcio::TrackerHit*>( trk->getTrackerHits().at(ihit) );
+          std::cout << " POS " << hit->getPosition( )[0] << std::endl;
+          _trthx[ i ][ ihit ] = hit->getPosition()[0];
+          _trthy[ i ][ ihit ] = hit->getPosition()[1];
+          _trthz[ i ][ ihit ] = hit->getPosition()[2];
+        }
+      }
     }
-    
   }
 }

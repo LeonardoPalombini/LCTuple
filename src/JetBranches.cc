@@ -58,7 +58,6 @@ void JetBranches::initBranches( TTree* tree, const std::string& pre){
 
    tree->Branch( (pre+"njet").c_str() , &_njet ,  (pre+"njet/I").c_str() ) ;
 
-
    // ------------ Default Jet parameters ------------------//
    tree->Branch( (pre+"jmox").c_str() , _jmox , (pre+"jmox["+pre+"njet]/F").c_str() ) ;
    tree->Branch( (pre+"jmoy").c_str() , _jmoy , (pre+"jmoy["+pre+"njet]/F").c_str() ) ;
@@ -87,9 +86,9 @@ void JetBranches::initBranches( TTree* tree, const std::string& pre){
 
 	  tree->Branch( (pre+"jnpid" ).c_str() , &_jnpid   ,  (pre+"jnpid/I").c_str() ) ;
 	  tree->Branch( (pre+"npfojet").c_str(), &_njetpfo , (pre+"npfojet["+pre+"njet]/I").c_str() ) ;
-    tree->Branch( (pre+"rcidx").c_str(), &_jetpfoori , (pre+"rcidx["+pre+"njet][LCT_JET_PARTICLES_MAX]/I").c_str() ) ;
+    tree->Branch( (pre+"rcidx").c_str(), &_jetpfoori , (pre+"rcidx["+pre+"njet][200]/I").c_str() ) ;
    } // end if
-
+    // 200
    //PFO branches
 
    if(_writeDaughtersParameters) {
@@ -97,17 +96,17 @@ void JetBranches::initBranches( TTree* tree, const std::string& pre){
           tree->Branch( (pre+"ndaughters").c_str(), _ndaughters , (pre+"ndaughters["+pre+"njet]/I").c_str() ) ;
           tree->Branch( (pre+"ntracks").c_str(), _ntracks , (pre+"ntracks["+pre+"njet]/I").c_str() ) ;
           tree->Branch( (pre+"nclusters").c_str(), _nclusters , (pre+"nclusters["+pre+"njet]/I").c_str() ) ;
-          tree->Branch( (pre+"daughters_PX").c_str(), _daughters_PX , (pre+"daughters_PX["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_PY").c_str(), _daughters_PY , (pre+"daughters_PY["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_PZ").c_str(), _daughters_PZ , (pre+"daughters_PZ["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_E").c_str(), _daughters_E , (pre+"daughters_E["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_M").c_str(), _daughters_M , (pre+"daughters_M["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_Q").c_str(), _daughters_Q , (pre+"daughters_Q["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackD0").c_str(), _daughters_trackD0 , (pre+"daughters_trackD0["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackPhi").c_str(), _daughters_trackPhi , (pre+"daughters_trackPhi["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackOmega").c_str(), _daughters_trackOmega , (pre+"daughters_trackOmega["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackZ0").c_str(), _daughters_trackZ0 , (pre+"daughters_trackZ0["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
-          tree->Branch( (pre+"daughters_trackTanLambda").c_str(), _daughters_trackTanLambda , (pre+"daughters_trackTanLambda["+pre+"njet][LCT_JET_PARTICLES_MAX]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_PX").c_str(), _daughters_PX , (pre+"daughters_PX["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_PY").c_str(), _daughters_PY , (pre+"daughters_PY["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_PZ").c_str(), _daughters_PZ , (pre+"daughters_PZ["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_E").c_str(), _daughters_E , (pre+"daughters_E["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_M").c_str(), _daughters_M , (pre+"daughters_M["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_Q").c_str(), _daughters_Q , (pre+"daughters_Q["+pre+"njet][200]/I").c_str() ) ;
+          tree->Branch( (pre+"daughters_trackD0").c_str(), _daughters_trackD0 , (pre+"daughters_trackD0["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_trackPhi").c_str(), _daughters_trackPhi , (pre+"daughters_trackPhi["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_trackOmega").c_str(), _daughters_trackOmega , (pre+"daughters_trackOmega["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_trackZ0").c_str(), _daughters_trackZ0 , (pre+"daughters_trackZ0["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_trackTanLambda").c_str(), _daughters_trackTanLambda , (pre+"daughters_trackTanLambda["+pre+"njet][200]/F").c_str() ) ;
    }
 
 
@@ -200,17 +199,17 @@ void JetBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt )
 	  if(_writeDaughtersParameters) {
  
       for ( size_t j = 0; j < LCT_JET_PARTICLES_MAX ; ++j ) {
-               _daughters_PX[ i ][ j ] = 0 ;
-               _daughters_PY[ i ][ j ] = 0 ;
-               _daughters_PZ[ i ][ j ] = 0 ;
-               _daughters_E[ i ][ j ] = 0 ;
-               _daughters_M[ i ][ j ] = 0 ;
-               _daughters_Q[ i ][ j ] = 0 ;
-               _daughters_trackD0[ i ][ j ] = 0;
-               _daughters_trackPhi[ i ][ j ] = 0;
-               _daughters_trackOmega[ i ][ j ] = 0;
-               _daughters_trackZ0[ i ][ j ] = 0;
-               _daughters_trackTanLambda[ i ][ j ] = 0;
+               _daughters_PX[ i ][ j ] = 0. ;
+               _daughters_PY[ i ][ j ] = 0. ;
+               _daughters_PZ[ i ][ j ] = 0. ;
+               _daughters_E[ i ][ j ] = 0. ;
+               _daughters_M[ i ][ j ] = 0. ;
+               _daughters_Q[ i ][ j ] = 0. ;
+               _daughters_trackD0[ i ][ j ] = 0.;
+               _daughters_trackPhi[ i ][ j ] = 0.;
+               _daughters_trackOmega[ i ][ j ] = 0.;
+               _daughters_trackZ0[ i ][ j ] = 0.;
+               _daughters_trackTanLambda[ i ][ j ] = 0.;
       }
     }   
   }
@@ -310,7 +309,6 @@ void JetBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt )
 	       if (abs(_daughters_Q[ i ][ partid ])==0) nclusters++;
 
          auto tracks = particles[partid]->getTracks();
-	       //std::cout << "ntracks = " << tracks.size() << " charge = " << _daughters_Q[ i ][ partid ] << std::endl;
 
 	       if (tracks.size()>0) {
 		       _daughters_trackD0[ i ][ partid ] = tracks[0]->getD0();

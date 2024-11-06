@@ -8,6 +8,7 @@
 #include "MCParticleFromRelationBranches.h"
 
 #include "JetBranches.h"
+#include "TrackBranches.h"
 #include "PIDBranches.h"
 
 
@@ -104,6 +105,7 @@ class LCTuple : public Processor {
   bool _jetColWriteParameters {};
   bool _isolepColWriteParameters {}; 
   bool _trkColWriteParameters {};
+  bool _trkColExtraParameters {};                 /* Enables writing extra trk 2D parameters */
   bool _cluColWriteParameters {};
   bool _sthColWriteParameters {};
   bool _trhColWriteParameters {};
@@ -130,7 +132,7 @@ class LCTuple : public Processor {
 //  CollectionBranches* _jetBranches {};
   JetBranches* _jetBranches {};
   CollectionBranches* _isolepBranches {};
-  CollectionBranches* _trkBranches {};
+  TrackBranches* _trkBranches {};
   CollectionBranches* _cluBranches {};
   CollectionBranches* _sthBranches {};
   CollectionBranches* _trhBranches {};

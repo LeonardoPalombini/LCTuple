@@ -184,6 +184,13 @@ registerProcessorParameter( "WriteIsoLepCollectionParameters" ,
 			      false
 			      );
 
+  registerProcessorParameter( "TrackCollectionExtraParameters" ,
+                              "Switch to write out extra parameters (2D) for tracks",
+            _trkColExtraParameters ,
+            false
+            );
+
+
   registerInputCollection( LCIO::CLUSTER,
 			   "ClusterCollection" , 
 			   "Name of the Cluster collection"  ,
@@ -387,6 +394,7 @@ void LCTuple::init() {
   if( _trkColName.size() ) {
     _trkBranches =  new TrackBranches ;
     _trkBranches->writeParameters(_trkColWriteParameters);
+    _trkBranches->writeTrkExtraParameters(_trkColExtraParameters); /* pass the value to TrackBranches */
     _trkBranches->initBranches( _tree ) ;
   }
   
