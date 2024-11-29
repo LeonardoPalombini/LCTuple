@@ -105,7 +105,8 @@ class LCTuple : public Processor {
   bool _jetColWriteParameters {};
   bool _isolepColWriteParameters {}; 
   bool _trkColWriteParameters {};
-  bool _trkColExtraParameters {};                 /* Enables writing extra trk 2D parameters */
+  bool _trkColStatesParameters {};               /* Enables writing extra trk states parameters */
+  bool _trkColHitsParameters {};                 /* Enables writing extra trk hits parameters */
   bool _cluColWriteParameters {};
   bool _sthColWriteParameters {};
   bool _trhColWriteParameters {};

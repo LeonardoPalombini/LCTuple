@@ -7,7 +7,6 @@
 #include "marlin/VerbosityLevels.h"
 
 #include "TTree.h"
-
 #include "TMath.h"
 
 
@@ -21,7 +20,6 @@ void TrackBranches::initBranches( TTree* tree, const std::string& pre){
   if (_writeparameters) CollectionBranches::initBranches(tree, (pre+"tr").c_str());
 
   tree->Branch( (pre+"ntrk").c_str() , &_ntrk ,  (pre+"ntrk/I").c_str() ) ;
-
   tree->Branch( (pre+"trori").c_str() , _trori , (pre+"trori["+pre+"ntrk]/I").c_str() ) ;
 
   tree->Branch( (pre+"trtyp").c_str() , _trtyp , (pre+"trtyp["+pre+"ntrk]/I").c_str() ) ;
@@ -32,11 +30,7 @@ void TrackBranches::initBranches( TTree* tree, const std::string& pre){
   tree->Branch( (pre+"trrih").c_str() , _trrih , (pre+"trrih["+pre+"ntrk]/F").c_str() ) ;
   tree->Branch( (pre+"trthn").c_str() , _trthn , (pre+"trthn["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trnts").c_str() , _trnts , (pre+"trnts["+pre+"ntrk]/I").c_str() ) ;
-  tree->Branch( (pre+"trfts").c_str() , _trfts , (pre+"trfts["+pre+"ntrk]/I").c_str() ) ;
-  tree->Branch( (pre+"trsip").c_str() , _trsip , (pre+"trsip["+pre+"ntrk]/I").c_str() ) ;
-  tree->Branch( (pre+"trsfh").c_str() , _trsfh , (pre+"trsfh["+pre+"ntrk]/I").c_str() ) ;
-  tree->Branch( (pre+"trslh").c_str() , _trslh , (pre+"trslh["+pre+"ntrk]/I").c_str() ) ;
-  tree->Branch( (pre+"trsca").c_str() , _trsca , (pre+"trsca["+pre+"ntrk]/I").c_str() ) ;
+
   tree->Branch( (pre+"trtvhn").c_str() , _trtvhn , (pre+"trtvhn["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trtihn").c_str() , _trtihn , (pre+"trtihn["+pre+"ntrk]/I").c_str() ) ;
   tree->Branch( (pre+"trtohn").c_str() , _trtohn , (pre+"trtohn["+pre+"ntrk]/I").c_str() ) ;
@@ -47,29 +41,43 @@ void TrackBranches::initBranches( TTree* tree, const std::string& pre){
   tree->Branch( (pre+"trdze").c_str() , _trdze , (pre+"trdze["+pre+"ntrk]/F").c_str() ) ;
   tree->Branch( (pre+"trzze").c_str() , _trzze , (pre+"trzze["+pre+"ntrk]/F").c_str() ) ;
   tree->Branch( (pre+"trphi").c_str() , _trphi , (pre+"trphi["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trtout").c_str() , _trtout , (pre+"trtout["+pre+"ntrk]/I").c_str() ) ;
 
-  tree->Branch( (pre+"ntrst").c_str() , &_ntrst , (pre+"ntrst/I").c_str() ) ;
-  tree->Branch( (pre+"tsloc").c_str() , _tsloc , (pre+"tsloc["+pre+"ntrst]/I").c_str() ) ;
-  tree->Branch( (pre+"tsdze").c_str() , _tsdze , (pre+"tsdze["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tsphi").c_str() , _tsphi , (pre+"tsphi["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tsome").c_str() , _tsome , (pre+"tsome["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tszze").c_str() , _tszze , (pre+"tszze["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tstnl").c_str() , _tstnl , (pre+"tstnl["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tsrpx").c_str() , _tsrpx , (pre+"tsrpx["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tsrpy").c_str() , _tsrpy , (pre+"tsrpy["+pre+"ntrst]/F").c_str() ) ;
-  tree->Branch( (pre+"tsrpz").c_str() , _tsrpz , (pre+"tsrpz["+pre+"ntrst]/F").c_str() ) ;
+  // tree->Branch( (pre+"trcov").c_str() , _trcov , (pre+"trcov["+pre+"ntrk][15]/F").c_str() ) ;
+  tree->Branch( (pre+"trk_sigmal0").c_str() , _trk_sigmal0 , (pre+"trk_sigmal0["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trk_sigmal1").c_str() , _trk_sigmal1 , (pre+"trk_sigmal1["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trk_sigmaphi").c_str() , _trk_sigmaphi , (pre+"trk_sigmaphi["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trk_sigmatheta").c_str() , _trk_sigmatheta , (pre+"trk_sigmatheta["+pre+"ntrk]/F").c_str() ) ;
+  tree->Branch( (pre+"trk_sigmaqoverp").c_str() , _trk_sigmaqoverp , (pre+"trk_sigmaqoverp["+pre+"ntrk]/F").c_str() ) ;
 
-  if(_writeExtraParameters) {
+  if (_writeTrkStatesParameters) {
+    tree->Branch( (pre+"trfts").c_str() , _trfts , (pre+"trfts["+pre+"ntrk]/I").c_str() ) ;
+    tree->Branch( (pre+"trsip").c_str() , _trsip , (pre+"trsip["+pre+"ntrk]/I").c_str() ) ;
+    tree->Branch( (pre+"trsfh").c_str() , _trsfh , (pre+"trsfh["+pre+"ntrk]/I").c_str() ) ;
+    tree->Branch( (pre+"trslh").c_str() , _trslh , (pre+"trslh["+pre+"ntrk]/I").c_str() ) ;
+    tree->Branch( (pre+"trsca").c_str() , _trsca , (pre+"trsca["+pre+"ntrk]/I").c_str() ) ;
+  
+    tree->Branch( (pre+"ntrst").c_str() , &_ntrst , (pre+"ntrst/I").c_str() ) ;
+    tree->Branch( (pre+"tsloc").c_str() , _tsloc , (pre+"tsloc["+pre+"ntrst]/I").c_str() ) ;
+    tree->Branch( (pre+"tsdze").c_str() , _tsdze , (pre+"tsdze["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tsphi").c_str() , _tsphi , (pre+"tsphi["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tsome").c_str() , _tsome , (pre+"tsome["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tszze").c_str() , _tszze , (pre+"tszze["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tstnl").c_str() , _tstnl , (pre+"tstnl["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tsrpx").c_str() , _tsrpx , (pre+"tsrpx["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tsrpy").c_str() , _tsrpy , (pre+"tsrpy["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tsrpz").c_str() , _tsrpz , (pre+"tsrpz["+pre+"ntrst]/F").c_str() ) ;
+    tree->Branch( (pre+"tscov").c_str() , _tscov , (pre+"tscov["+pre+"ntrst][15]/F").c_str() ) ;
+  }
+  
+  if(_writeTrkHitsParameters) {
     tree->Branch( (pre+"trthi").c_str() , _trthi , (pre+"trthi["+pre+"ntrk][50]/I").c_str() ) ;
     tree->Branch( (pre+"trshn").c_str() , _trshn , (pre+"trshn["+pre+"ntrk][12]/I").c_str() ) ;
     tree->Branch( (pre+"trthd").c_str() , _trthd , (pre+"trthd["+pre+"ntrk][50]/I").c_str() ) ;
     tree->Branch( (pre+"trthx").c_str() , _trthx , (pre+"trthx["+pre+"ntrk][50]/F").c_str() ) ;
     tree->Branch( (pre+"trthy").c_str() , _trthy , (pre+"trthy["+pre+"ntrk][50]/F").c_str() ) ;
     tree->Branch( (pre+"trthz").c_str() , _trthz , (pre+"trthz["+pre+"ntrk][50]/F").c_str() ) ;
-    tree->Branch( (pre+"tscov").c_str() , _tscov , (pre+"tscov["+pre+"ntrst][15]/F").c_str() ) ;
-    tree->Branch( (pre+"trcov").c_str() , _tscov , (pre+"tscov["+pre+"ntrk][15]/F").c_str() ) ;
   }
-
 }
   
 
@@ -88,72 +96,56 @@ void TrackBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
 
   _ntrk  = col->getNumberOfElements() ;
 
-  //---------  create a helper vector with track states first -------------------------------
-  std::vector<lcio::TrackState*> tsV ;
-  tsV.reserve(  col->getNumberOfElements() * 15 ) ;
+  if (_writeTrkStatesParameters) {
+    //---------  create a helper vector with track states first -------------------------------
+    std::vector<lcio::TrackState*> tsV ;
+    tsV.reserve(  col->getNumberOfElements() * 15 ) ;
   
-  for(int i=0, nrc  = col->getNumberOfElements() ; i < nrc ; ++i ){
-    
-    lcio::Track* trk = static_cast<lcio::Track*>( col->getElementAt( i) ) ;
-    
-    const EVENT::TrackStateVec & tss = trk->getTrackStates() ;
-    
-    for(int j=0, nts = tss.size() ; j<nts ; ++j){
-      
-      tsV.push_back( tss[j] ) ;
-      
-      tss[j]->ext<CollIndex>() =  tsV.size() ;
+    for (int i=0, nrc  = col->getNumberOfElements() ; i < nrc ; ++i ) {
+      lcio::Track* trk = static_cast<lcio::Track*>( col->getElementAt( i) ) ;
+      const EVENT::TrackStateVec & tss = trk->getTrackStates() ;
+      for (int j=0, nts = tss.size() ; j<nts ; ++j) {
+        tsV.push_back( tss[j] ) ;
+      }
     }
-  }
+    _ntrst = tsV.size() ;
+    streamlog_out( DEBUG ) <<  " total number of track states : " << _ntrst << std::endl  ; 
 
-  _ntrst = tsV.size() ;
-
-  streamlog_out( DEBUG ) <<  " total number of track states : " << _ntrst << std::endl  ; 
-
-  //----------  fill the track states ---------------------------------------
-  for(int i=0 ; i < _ntrst ; ++i){
+    //----------  fill the track states ---------------------------------------
+    for (int i=0 ; i < _ntrst ; ++i) {
     
-    lcio::TrackState* ts = tsV[i] ;
+      lcio::TrackState* ts = tsV[i] ;
+      _tsloc[ i ] = ts->getLocation() ; 
+      _tsdze[ i ] = ts->getD0() ;
+      _tsphi[ i ] = ts->getPhi() ;
+      _tsome[ i ] = ts->getOmega() ;
+      _tszze[ i ] = ts->getZ0() ;
+      _tstnl[ i ] = ts->getTanLambda() ;
+      _tsrpx[ i ] = ts->getReferencePoint()[0] ;
+      _tsrpy[ i ] = ts->getReferencePoint()[1] ;
+      _tsrpz[ i ] = ts->getReferencePoint()[2] ;
     
-    _tsloc[ i ] = ts->getLocation() ; 
-    _tsdze[ i ] = ts->getD0() ;
-    _tsphi[ i ] = ts->getPhi() ;
-    _tsome[ i ] = ts->getOmega() ;
-    _tszze[ i ] = ts->getZ0() ;
-    _tstnl[ i ] = ts->getTanLambda() ;
-    _tsrpx[ i ] = ts->getReferencePoint()[0] ;
-    _tsrpy[ i ] = ts->getReferencePoint()[1] ;
-    _tsrpz[ i ] = ts->getReferencePoint()[2] ;
-    
-    if(_writeExtraParameters) {
-      for(int j=0;j<15;++j){
+      for (int j=0;j<15;++j) {
         _tscov[ i ][ j ] = ts->getCovMatrix()[j] ;
       }
     }
   }
-  
+
   //------  fill the Tracks particle ----------------------------
-  for(int i=0 ; i < _ntrk ; ++i){
+  for (int i=0 ; i < _ntrk ; ++i) {
     
     lcio::Track* trk = static_cast<lcio::Track*>( col->getElementAt(i) ) ;
-
     _trori[i] = trk->ext<CollID>();
-    
     _trtyp[ i ] = trk->getType() ;
     _trch2[ i ] = trk->getChi2() ;
     _trndf[ i ] = trk->getNdf() ; 
     _tredx[ i ] = trk->getdEdx() ;
     _trede[ i ] = trk->getdEdxError() ;
     _trrih[ i ] = trk->getRadiusOfInnermostHit() ;
-
     _trnts[ i ] = trk->getTrackStates().size() ;
-    _trfts[ i ] = ( _trnts[i]>0 ? trk->getTrackStates()[0]->ext<CollIndex>() -1  :  -1 )  ;
 
     const lcio::TrackState* ts ;
-
     ts = trk->getTrackState( lcio::TrackState::AtIP )  ;
-    _trsip[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
-
     // save parameters AtIP state
     if ( ts ) {
       _trome[ i ] = ts->getOmega();
@@ -171,27 +163,31 @@ void TrackBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
       _trphi[ i ] = -1;
     }    
 
-   if(_writeExtraParameters) {
-      for(int j=0;j<15;++j){
-        _trcov[ i ][ j ] = ts->getCovMatrix()[j] ;
-      }
+    // save sigma values from the covariance matrix
+    /*
+    for(int j=0;j<15;++j){
+      _trcov[ i ][ j ] = ts->getCovMatrix()[j] ;
     }
+    */
+    // save only diagonal values
+    _trk_sigmal0[i]     = ts->getCovMatrix()[0];
+    _trk_sigmal1[i]     = ts->getCovMatrix()[2];
+    _trk_sigmaphi[i]    = ts->getCovMatrix()[5];
+    _trk_sigmatheta[i]  = ts->getCovMatrix()[9];
+    _trk_sigmaqoverp[i] = ts->getCovMatrix()[14];
+  
+    if (_writeTrkStatesParameters) {
+      _trfts[ i ] = ( _trnts[i]>0 ? trk->getTrackStates()[0]->ext<CollIndex>() -1  :  -1 )  ;
+      _trsip[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;  
 
-    ts = trk->getTrackState( lcio::TrackState::AtFirstHit ) ;
-    _trsfh[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
+      ts = trk->getTrackState( lcio::TrackState::AtFirstHit ) ;
+      _trsfh[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
 
-    ts =  trk->getTrackState( lcio::TrackState::AtLastHit ) ;
-    _trslh[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
+      ts =  trk->getTrackState( lcio::TrackState::AtLastHit ) ;
+      _trslh[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
 
-    ts = trk->getTrackState( lcio::TrackState::AtCalorimeter ) ;
-    _trsca[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
-    
-    int nshn = ( trk->getSubdetectorHitNumbers().size()   <  12  ?  
-		 trk->getSubdetectorHitNumbers().size()   :  12  ) ;
-
-    if(_writeExtraParameters) {    
-      for( int j=0; j<nshn ; ++j )
-        _trshn[ i ][ j ]  = trk->getSubdetectorHitNumbers()[j] ;
+      ts = trk->getTrackState( lcio::TrackState::AtCalorimeter ) ;
+      _trsca[ i ] = ( ts ?  ts->ext<CollIndex>() - 1 : -1 ) ;   
     }
 
     const EVENT::IntVec& subdetectorHits = trk->getSubdetectorHitNumbers();
@@ -203,11 +199,16 @@ void TrackBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
     if ( trk->getSubdetectorHitNumbers().size() > 6 )
       _trtohn[ i ] = subdetectorHits[5]+subdetectorHits[6]; // outer
 
-    _trtnh[ i ] = trk->getNholes();
+    _trtnh[ i ]  = trk->getNholes(); 
+    _trthn[ i ]  = trk->getTrackerHits().size();
+    _trtout[ i ] = trk->getTrackerHits().size() - 0.5 * trk->getNdf();
+     
+    if(_writeTrkHitsParameters) {
 
-    _trthn[ i ] = trk->getTrackerHits().size();
-      
-    if(_writeExtraParameters) {
+      int nshn = ( subdetectorHits.size() <  12  ? subdetectorHits.size() : 12);
+
+      for( int j=0; j<nshn ; ++j )
+        _trshn[ i ][ j ]  = subdetectorHits[j] ;
 
       for( unsigned int ihit=0; ihit<trk->getTrackerHits().size() ; ++ihit ){
         int hit_index = ( trk->getTrackerHits().at(ihit) ?
