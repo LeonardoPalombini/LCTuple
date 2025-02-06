@@ -42,6 +42,7 @@ private:
 
   float  _vtcov[ LCT_VERTEX_MAX ][6]  {} ;
   float  _vtpar[ LCT_VERTEX_MAX ][6]  {} ; //arbitrary value -- has to be checked if enough fields
+  float  _vttrchi[LCT_VERTEX_MAX][30] {} ;
 } ;
 
 #endif

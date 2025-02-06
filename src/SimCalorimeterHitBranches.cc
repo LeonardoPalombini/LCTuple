@@ -31,7 +31,7 @@ void SimCalorimeterHitBranches::initBranches( TTree* tree, const std::string& pr
   tree->Branch( (pre+"scpoz").c_str() , _scpoz , (pre+"scpoz["+pre+"nsch]/F").c_str() ) ;
   tree->Branch( (pre+"scene").c_str() , _scene , (pre+"scene["+pre+"nsch]/F").c_str() ) ;
   tree->Branch( (pre+"scmcc").c_str() , _scmcc , (pre+"scmcc["+pre+"nsch]/I").c_str() ) ;
-  tree->Branch( (pre+"sctim").c_str() , _sctim , (pre+"sctim["+pre+"nsch][100]/F").c_str() ) ;  
+  tree->Branch( (pre+"sctim").c_str() , _sctim , (pre+"sctim["+pre+"nsch][50]/F").c_str() ) ;  
   
 }
 

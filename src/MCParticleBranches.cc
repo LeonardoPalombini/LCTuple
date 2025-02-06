@@ -66,7 +66,9 @@ void MCParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* ev
   if (_writeparameters) CollectionBranches::fill(col, evt);
 
   _nmc  = col->getNumberOfElements() ;
-  
+  int nmax = 50;
+  if(_nmc > nmax) _nmc = nmax;
+
   for(int i=0 ; i < _nmc ; ++i){
     
     lcio::MCParticle* mcp = static_cast<lcio::MCParticle*>( col->getElementAt(i) ) ;

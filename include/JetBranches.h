@@ -158,6 +158,8 @@ class JetBranches : public CollectionBranches
       float _daughters_trackOmega[ LCT_JET_MAX ][ LCT_JET_PARTICLES_MAX ] {} ; /* PFOs track Omega */
       float _daughters_trackZ0[ LCT_JET_MAX ][ LCT_JET_PARTICLES_MAX ] {} ; /* PFOs track Z0 */
       float _daughters_trackTanLambda[ LCT_JET_MAX ][ LCT_JET_PARTICLES_MAX ] {} ; /* PFOs track TanLambda */
+      float _daughters_trackSigmaD0[ LCT_JET_MAX ][ LCT_JET_PARTICLES_MAX ] {} ;  // error on d0 from cov matrix
+      float _daughters_trackSigmaZ0[ LCT_JET_MAX ][ LCT_JET_PARTICLES_MAX ] {} ; // error on Z0 from cov matrix
 
 
 }; /* -----  end of class JetBranches  ----- */

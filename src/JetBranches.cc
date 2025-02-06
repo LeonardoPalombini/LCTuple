@@ -107,6 +107,8 @@ void JetBranches::initBranches( TTree* tree, const std::string& pre){
           tree->Branch( (pre+"daughters_trackOmega").c_str(), _daughters_trackOmega , (pre+"daughters_trackOmega["+pre+"njet][200]/F").c_str() ) ;
           tree->Branch( (pre+"daughters_trackZ0").c_str(), _daughters_trackZ0 , (pre+"daughters_trackZ0["+pre+"njet][200]/F").c_str() ) ;
           tree->Branch( (pre+"daughters_trackTanLambda").c_str(), _daughters_trackTanLambda , (pre+"daughters_trackTanLambda["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_trackSigmaD0").c_str(), _daughters_trackSigmaD0 , (pre+"daughters_trackSigmaD0["+pre+"njet][200]/F").c_str() ) ;
+          tree->Branch( (pre+"daughters_trackSigmaZ0").c_str(), _daughters_trackSigmaZ0 , (pre+"daughters_trackSigmaZ0["+pre+"njet][200]/F").c_str() ) ;
    }
 
 
@@ -310,12 +312,14 @@ void JetBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt )
 
          auto tracks = particles[partid]->getTracks();
 
-	       if (tracks.size()>0) {
+	       if (tracks.size()>0 && tracks[0] != NULL) {
 		       _daughters_trackD0[ i ][ partid ] = tracks[0]->getD0();
 		       _daughters_trackPhi[ i ][ partid ] = tracks[0]->getPhi();
 		       _daughters_trackOmega[ i ][ partid ] = tracks[0]->getOmega();
 		       _daughters_trackZ0[ i ][ partid ] = tracks[0]->getZ0();
 		       _daughters_trackTanLambda[ i ][ partid ] = tracks[0]->getTanLambda();
+           _daughters_trackSigmaD0[ i ][ partid ] = tracks[0]->getCovMatrix()[0];
+           _daughters_trackSigmaZ0[ i ][ partid ] = tracks[0]->getCovMatrix()[2];
 	       }
 
       }

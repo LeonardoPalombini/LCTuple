@@ -22,25 +22,25 @@ struct CollID : public lcrtrel::LCIntExtension<CollID> {} ;
 //         => ADJUST AS NEEDED !!!!!!
 // =================================================================
 
-#define LCT_COLLENTRIES_MAX        1000000
-#define LCT_MCPARTICLE_MAX         1000000
-#define LCT_RECOPARTICLE_MAX        500000
-#define LCT_TRACK_MAX              1200000
-#define LCT_TRACKSTATE_MAX         4000000
-#define LCT_CLUSTER_MAX             500000
-#define LCT_RELATION_MAX           6000000
-#define LCT_SIMTRACKERHIT_MAX      6000000
-#define LCT_TRACKERHIT_MAX         3000000
-#define LCT_TRACKERRAWHIT_MAX     10000000
-#define LCT_SIMCALORIMETERHIT_MAX  5000000
-#define LCT_CALORIMETERHIT_MAX     1000000
-#define LCT_PARTICLEID_MAX         1000000
-#define LCT_VERTEX_MAX                1000
-#define LCT_JET_MAX                    200
-#define LCT_JET_PARTICLES_MAX          200
-#define LCT_ISOLEP_MAX              100000
+#define LCT_COLLENTRIES_MAX       1000000
+#define LCT_MCPARTICLE_MAX        1000000
+#define LCT_RECOPARTICLE_MAX       500000
+#define LCT_TRACK_MAX             1500000
+#define LCT_TRACKSTATE_MAX        100000
+#define LCT_CLUSTER_MAX            500000
+#define LCT_RELATION_MAX          1000000
+#define LCT_SIMTRACKERHIT_MAX     2000000
+#define LCT_TRACKERHIT_MAX        3000000
+#define LCT_TRACKERRAWHIT_MAX     5000000
+#define LCT_SIMCALORIMETERHIT_MAX 3000000
+#define LCT_CALORIMETERHIT_MAX    2000000
+#define LCT_PARTICLEID_MAX        1000000
+#define LCT_VERTEX_MAX               1000
+#define LCT_JET_MAX				            200
+#define LCT_JET_PARTICLES_MAX			    200
+#define LCT_ISOLEP_MAX             100000
 
-#define LCT_STRING_MAX            1024
+#define LCT_STRING_MAX       1024
 
 #define LCT_PARAMETERS_MAX        1000
 #define LCT_PARAMVALS_MAX         50

@@ -45,7 +45,7 @@ private:
   float  _scpoz[ LCT_SIMCALORIMETERHIT_MAX ]  {} ;
   float  _scene[ LCT_SIMCALORIMETERHIT_MAX ]  {} ;
   int    _scmcc[ LCT_SIMCALORIMETERHIT_MAX ]  {} ;
-  float  _sctim[ LCT_SIMCALORIMETERHIT_MAX ][ 100 ]  {} ;
+  float  _sctim[ LCT_SIMCALORIMETERHIT_MAX ][ 50 ]  {} ;
   
 } ;
 
