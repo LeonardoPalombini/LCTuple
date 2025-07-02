@@ -565,7 +565,7 @@ void LCTuple::processEvent( LCEvent * evt ) {
   if( mcpRemoveOverlayCol ) _mcpremoveoverlayBranches->fill( mcpRemoveOverlayCol , evt ) ;
 
   if( recCol ) {
-    _recBranches->fill( recCol , evt ) ;
+    _recBranches->fill( recCol , evt , cluCol ) ;
 
     for( auto pidb : _pidBranchesVec ) pidb->fill( recCol , evt ) ;
   }

@@ -7,6 +7,7 @@
 #include "EVENT/Vertex.h"
 
 #include "TTree.h"
+#include <algorithm>
 
 
 void RecoParticleBranches::initBranches( TTree* tree, const std::string& pre){
@@ -54,10 +55,12 @@ void RecoParticleBranches::initBranches( TTree* tree, const std::string& pre){
   tree->Branch( (pre+"pillh").c_str() , _pillh , (pre+"pillh["+pre+"npid]/F").c_str() ) ;
   tree->Branch( (pre+"pialg").c_str() , _pialg , (pre+"pialg["+pre+"npid]/I").c_str() ) ;
   
+  //tree->Branch( (pre+"rcclid").c_str() , _rcclid , (pre+"rcclid["+pre+"nrec]["+pre+"rcncl]/I").c_str() ) ;
+  tree->Branch( (pre+"rcclid").c_str() , _rcclid , (pre+"rcclid["+pre+"nrec][10]/I").c_str() ) ;
 }
   
 
-void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ){
+void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt, const EVENT::LCCollection* colCluster){
   
   if( !col ) return ;
 
@@ -104,7 +107,7 @@ void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* 
     _pialg[ i ] = pid->getAlgorithmType() ;
   }
 
-
+  std::vector<int> usedClusters;
 
   //------  fill the Reconstructed particle ----------------------------
   for(int i=0 ; i < _nrec ; ++i){
@@ -146,7 +149,33 @@ void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* 
     _rcnrp[ i ] = rec->getParticles().size();
 
     _rcftr[ i ] = ( rec->getTracks().size() > 0 ?  rec->getTracks()[0]->ext<CollIndex>() - 1  :  -1 )   ;
+
+    for(int s = 0; s < 10; s++){
+      _rcclid[i][s] = -1;
+    }
     
+    if(!colCluster) continue;
+    lcio::ClusterVec clusters = rec->getClusters();
+    lcio::Cluster* temp_clus = NULL;
+
+    for(unsigned int c = 0; c < clusters.size(); c++){
+
+      for(int ccoll = 0; ccoll < colCluster->getNumberOfElements(); ccoll++){
+
+        if(std::find(usedClusters.begin(), usedClusters.end(), ccoll) != usedClusters.end() )
+          continue;
+
+        temp_clus = static_cast<lcio::Cluster*>( colCluster->getElementAt(ccoll) );
+        
+        if(temp_clus->id() != clusters[c]->id()) continue;
+
+        _rcclid[i][c] = ccoll;
+        usedClusters.push_back(ccoll);
+        break;
+      }
+    }
+
+    usedClusters.clear();
   }
 
 }

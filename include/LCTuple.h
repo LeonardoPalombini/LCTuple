@@ -10,6 +10,7 @@
 #include "JetBranches.h"
 #include "TrackBranches.h"
 #include "PIDBranches.h"
+#include "RecoParticleBranches.h"
 
 
 using namespace lcio ;
@@ -129,7 +130,7 @@ class LCTuple : public Processor {
   CWBranchesSet* _evtBranches {};
   CollectionBranches* _mcpBranches {};
   CollectionBranches* _mcpremoveoverlayBranches {};
-  CollectionBranches* _recBranches {};
+  RecoParticleBranches* _recBranches {};
 //  CollectionBranches* _jetBranches {};
   JetBranches* _jetBranches {};
   CollectionBranches* _isolepBranches {};

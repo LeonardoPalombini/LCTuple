@@ -27,7 +27,7 @@ public:
   
   virtual void initBranches( TTree* tree, const std::string& prefix="" ) ; //const char*  prefix=0) ;
   
-  virtual void fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt ) ;
+  virtual void fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt, const EVENT::LCCollection* colCluster ) ;
   
   virtual ~RecoParticleBranches() {} ;
   
@@ -71,6 +71,7 @@ private:
   // EVENT::ClusterVec _clusters ;
   // EVENT::TrackVec _tracks ;
   
+  int    _rcclid[ LCT_RECOPARTICLE_MAX ][10]  {} ;
   
 } ;
 
