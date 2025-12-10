@@ -56,11 +56,12 @@ void RecoParticleBranches::initBranches( TTree* tree, const std::string& pre){
   tree->Branch( (pre+"pialg").c_str() , _pialg , (pre+"pialg["+pre+"npid]/I").c_str() ) ;
   
   //tree->Branch( (pre+"rcclid").c_str() , _rcclid , (pre+"rcclid["+pre+"nrec]["+pre+"rcncl]/I").c_str() ) ;
-  tree->Branch( (pre+"rcclid").c_str() , _rcclid , (pre+"rcclid["+pre+"nrec][10]/I").c_str() ) ;
+  tree->Branch( (pre+"rcclid").c_str() , _rcclid , (pre+"rcclid["+pre+"nrec][5]/I").c_str() ) ;
+  tree->Branch( (pre+"rctrid").c_str() , _rctrid , (pre+"rctrid["+pre+"nrec][5]/I").c_str() ) ;
 }
   
 
-void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt, const EVENT::LCCollection* colCluster){
+void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* evt, const EVENT::LCCollection* colTracks, const EVENT::LCCollection* colCluster){
   
   if( !col ) return ;
 
@@ -108,6 +109,7 @@ void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* 
   }
 
   std::vector<int> usedClusters;
+  std::vector<int> usedTracks;
 
   //------  fill the Reconstructed particle ----------------------------
   for(int i=0 ; i < _nrec ; ++i){
@@ -150,8 +152,9 @@ void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* 
 
     _rcftr[ i ] = ( rec->getTracks().size() > 0 ?  rec->getTracks()[0]->ext<CollIndex>() - 1  :  -1 )   ;
 
-    for(int s = 0; s < 10; s++){
+    for(int s = 0; s < 5; s++){
       _rcclid[i][s] = -1;
+      _rctrid[i][s] = -1;
     }
     
     if(!colCluster) continue;
@@ -171,6 +174,27 @@ void RecoParticleBranches::fill(const EVENT::LCCollection* col, EVENT::LCEvent* 
 
         _rcclid[i][c] = ccoll;
         usedClusters.push_back(ccoll);
+        break;
+      }
+    }
+
+    if(!colTracks) continue;
+    lcio::TrackVec tracks = rec->getTracks();
+    lcio::Track* temp_trk = NULL;
+
+    for(unsigned int t = 0; t < tracks.size(); t++){
+
+      for(int tcoll = 0; tcoll < colTracks->getNumberOfElements(); tcoll++){
+
+        if(std::find(usedTracks.begin(), usedTracks.end(), tcoll) != usedTracks.end() )
+          continue;
+
+        temp_trk = static_cast<lcio::Track*>( colTracks->getElementAt(tcoll) );
+        
+        if(temp_trk->id() != tracks[t]->id()) continue;
+
+        _rctrid[i][t] = tcoll;
+        usedTracks.push_back(tcoll);
         break;
       }
     }
